@@ -613,7 +613,7 @@
     function advanceSlide() {
       if (current < slides.length - 1) {
         showSlide(current + 1);
-        slideshowTimer = setTimeout(advanceSlide, 3000);
+        slideshowTimer = setTimeout(advanceSlide, 7000);
       } else {
         stopSlideshow();
       }
@@ -622,14 +622,14 @@
     function startSlideshow() {
       stopSlideshow();
       showSlide(1);
-      slideshowTimer = setTimeout(advanceSlide, 3000);
+      slideshowTimer = setTimeout(advanceSlide, 7000);
     }
 
     function goToNextSlide() {
       stopSlideshow();
       if (current < slides.length - 1) {
         showSlide(current + 1);
-        slideshowTimer = setTimeout(advanceSlide, 3000);
+        slideshowTimer = setTimeout(advanceSlide, 7000);
       }
     }
 
