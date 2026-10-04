@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +49,6 @@
       background-position: center;
     }
 
-    /* Lighter overlay to see background better */
     .slide::before {
       content: "";
       position: absolute;
@@ -75,7 +75,6 @@
       border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 28px;
       padding: 32px 24px;
-      /* Removed backdrop-filter blur to see background clearly */
       box-shadow: var(--shadow);
     }
 
@@ -424,8 +423,10 @@
     }
   </style>
 </head>
+
 <body>
   <main class="app">
+
     <section class="slide active" style="background-image: url('sunset.jpg');">
       <div class="content">
         <p class="eyebrow">A small question</p>
@@ -529,32 +530,27 @@
     <section class="slide" id="celebrationSlide" style="background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 50%, #ffc0cb 100%);">
       <div class="content">
         <h1 style="color: var(--accent);">Yay! That just made my day! ❤️</h1>
+
         <div class="rabbits-scene">
           <div class="heart"></div>
+
           <div class="rabbit-left">
             <div class="body">
               <div class="head">
-                <div class="ear left">
-                  <div class="ear-inner"></div>
-                </div>
-                <div class="ear right">
-                  <div class="ear-inner"></div>
-                </div>
+                <div class="ear left"><div class="ear-inner"></div></div>
+                <div class="ear right"><div class="ear-inner"></div></div>
                 <div class="eye left"></div>
                 <div class="eye right"></div>
                 <div class="nose"></div>
               </div>
             </div>
           </div>
+
           <div class="rabbit-right">
             <div class="body">
               <div class="head">
-                <div class="ear left">
-                  <div class="ear-inner"></div>
-                </div>
-                <div class="ear right">
-                  <div class="ear-inner"></div>
-                </div>
+                <div class="ear left"><div class="ear-inner"></div></div>
+                <div class="ear right"><div class="ear-inner"></div></div>
                 <div class="eye left"></div>
                 <div class="eye right"></div>
                 <div class="nose"></div>
@@ -562,7 +558,9 @@
             </div>
           </div>
         </div>
+
         <p class="celebration-text">Can't wait for our date! 🌟</p>
+
         <div class="actions">
           <button class="secondary" id="backBtn">Go back</button>
         </div>
@@ -580,14 +578,13 @@
     const yesBtn = document.getElementById('yesBtn');
     const backBtn = document.getElementById('backBtn');
     const nextBtns = document.querySelectorAll('.next-btn');
-    const celebrationSlide = document.getElementById('celebrationSlide');
 
     let current = 0;
-    let slideshowTimer = null;
-    let celebrationIndex = slides.length - 1;
+    const celebrationIndex = slides.length - 1;
 
     function renderDots() {
       progress.innerHTML = '';
+
       slides.forEach((_, index) => {
         const dot = document.createElement('span');
         dot.className = 'dot' + (index === current ? ' active' : '');
@@ -599,57 +596,39 @@
       slides.forEach((slide, i) => {
         slide.classList.toggle('active', i === index);
       });
+
       current = index;
       renderDots();
     }
 
-    function stopSlideshow() {
-      if (slideshowTimer) {
-        clearTimeout(slideshowTimer);
-        slideshowTimer = null;
-      }
-    }
-
-    function advanceSlide() {
-      if (current < slides.length - 1) {
-        showSlide(current + 1);
-        slideshowTimer = setTimeout(advanceSlide, 7000);
-      } else {
-        stopSlideshow();
-      }
-    }
-
+    // Start only when the viewer clicks.
     function startSlideshow() {
-      stopSlideshow();
       showSlide(1);
-      slideshowTimer = setTimeout(advanceSlide, 7000);
     }
 
+    // Move forward only when the viewer clicks Next.
     function goToNextSlide() {
-      stopSlideshow();
       if (current < slides.length - 1) {
         showSlide(current + 1);
-        slideshowTimer = setTimeout(advanceSlide, 7000);
       }
     }
 
     startBtn.addEventListener('click', startSlideshow);
-    replayBtn.addEventListener('click', () => {
-      showSlide(0);
-      stopSlideshow();
-    });
-    yesBtn.addEventListener('click', () => {
-      stopSlideshow();
-      showSlide(celebrationIndex);
-    });
-    
-    backBtn.addEventListener('click', () => {
-      showSlide(0);
-      stopSlideshow();
-    });
-    
+
     nextBtns.forEach(btn => {
       btn.addEventListener('click', goToNextSlide);
+    });
+
+    replayBtn.addEventListener('click', () => {
+      showSlide(0);
+    });
+
+    yesBtn.addEventListener('click', () => {
+      showSlide(celebrationIndex);
+    });
+
+    backBtn.addEventListener('click', () => {
+      showSlide(0);
     });
 
     renderDots();
