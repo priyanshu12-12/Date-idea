@@ -571,67 +571,68 @@
   </main>
 
   <script>
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const progress = document.getElementById('progress');
-    const startBtn = document.getElementById('startBtn');
-    const replayBtn = document.getElementById('replayBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const backBtn = document.getElementById('backBtn');
-    const nextBtns = document.querySelectorAll('.next-btn');
+    
+const slides = Array.from(document.querySelectorAll('.slide'));
+const progress = document.getElementById('progress');
 
-    let current = 0;
-    const celebrationIndex = slides.length - 1;
+const startBtn = document.getElementById('startBtn');
+const replayBtn = document.getElementById('replayBtn');
+const yesBtn = document.getElementById('yesBtn');
+const backBtn = document.getElementById('backBtn');
+const nextBtns = document.querySelectorAll('.next-btn');
 
-    function renderDots() {
-      progress.innerHTML = '';
+let current = 0;
 
-      slides.forEach((_, index) => {
-        const dot = document.createElement('span');
-        dot.className = 'dot' + (index === current ? ' active' : '');
-        progress.appendChild(dot);
-      });
-    }
+function renderDots() {
+  progress.innerHTML = '';
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
-      });
+  slides.forEach((_, index) => {
+    const dot = document.createElement('span');
+    dot.className = 'dot' + (index === current ? ' active' : '');
+    progress.appendChild(dot);
+  });
+}
 
-      current = index;
-      renderDots();
-    }
+function showSlide(index) {
+  if (index < 0 || index >= slides.length) return;
 
-    // Start only when the viewer clicks.
-    function startSlideshow() {
-      showSlide(1);
-    }
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
 
-    // Move forward only when the viewer clicks Next.
-    function goToNextSlide() {
-      if (current < slides.length - 1) {
-        showSlide(current + 1);
-      }
-    }
+  current = index;
+  renderDots();
+}
 
-    startBtn.addEventListener('click', startSlideshow);
+// Start only on button click
+startBtn.addEventListener('click', () => {
+  showSlide(1);
+});
 
-    nextBtns.forEach(btn => {
-      btn.addEventListener('click', goToNextSlide);
-    });
+// Next only on button click
+nextBtns.forEach(button => {
+  button.addEventListener('click', () => {
+    showSlide(current + 1);
+  });
+});
 
-    replayBtn.addEventListener('click', () => {
-      showSlide(0);
-    });
+// Replay
+replayBtn.addEventListener('click', () => {
+  showSlide(0);
+});
 
-    yesBtn.addEventListener('click', () => {
-      showSlide(celebrationIndex);
-    });
+// Yes button
+yesBtn.addEventListener('click', () => {
+  showSlide(slides.length - 1);
+});
 
-    backBtn.addEventListener('click', () => {
-      showSlide(0);
-    });
+// Back button
+backBtn.addEventListener('click', () => {
+  showSlide(0);
+});
 
-    renderDots();
+renderDots();
+
   </script>
 </body>
 </html>
